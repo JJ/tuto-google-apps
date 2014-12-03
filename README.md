@@ -97,7 +97,55 @@ y a veces varios objetos, y estos servicios se suelen llamar
 y las hojas de cálculo la
 [`SpreadsheetApp`](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app). Todos
 estos objetos están instanciados y accesibles a todos los scripts que
-vayamos a usar.
+vayamos a usar. Pero antes, tendremos que aprender sobre los
+
+## Métodos de autenticación
+
+Cuando se trabaja en la nube se está trabajando con un interfaz de
+aplicación, un API, igual que en el sistema operativo; en éste hay una
+jerarquía de privilegios que te permiten activar, o no, diferentes
+funciones y esos privilegios afectan por un lado a los usuarios y por
+otro lado a los programas. Un usuario *autoriza* a un programa a
+ejecutarse y acceder a sus recursos (sistema de ficheros, la red)
+simplemente ejecutándolo. El permiso es implícito.
+
+Sin embargo, en la nube el entorno es un poco más complicado. Primero,
+porque muchos programas se ejecutan también desde la misma nube y el
+considerar que hay una autorización implícita puede ser un poco
+peligroso. Segundo, porque los recursos están compartimentalizados y
+se puede decidir de forma granular a qué recursos se tiene acceso.
+
+Por eso generalmente se usa, igual que en el móvil cuando se instala
+una aplicación, un proceso de autorización explícita; en casi todos
+los casos se usa un sistema llamado
+[OAuth2](https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization). En
+la práctica, eso significa que hay dos conjuntos de claves
+
+* Una clave y un *secreto* por aplicación.
+* Una clave y un *secreto* por usuario que autorice.
+
+Por eso se suele hacer un sistema de autorización en dos pasos: en un
+primer paso se descargan (generalmente del portal del desarrollador)
+la clave y el secreto y, cada vez que se accede a un nuevo usuario,
+este tiene que autorizarlo explícitamente, con lo que le *concede* a
+la aplicación la segunda clave y secreto.
+
+Dependiendo del sistema que usemos, esto habrá que hacerlo y
+almacenarlo por parte de nuestro programa. En el caso de Google App,
+simplemente veremos que, cuando un usuario ejecuta por primera vez un
+*script*, tiene que autorizarlo. Lo que haremos justamente a
+continuación, cuando ejecutemos
+
+## Nuestro primer programa en la nube
+
+[Google Script](https://script.google.com/) es a la vez un entorno de
+programación que nos permite crear y ejecutar nuestro programa. Vamos
+a por el primero, el clásico hola mundo. Si creamos un script en
+blanco, nos saldrá algo así; el entorno completa los nombres de las
+funciones para aquellas que estén declaras:
+
+![Captura de pantalla del IDE](logger.png)
+
 
 
 
