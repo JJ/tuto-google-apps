@@ -186,6 +186,37 @@ Ver -> Registros. Saldrá algo así:
 > Escribir un script que escriba en el registro una tabla de
 > multiplicar de un número determinado.
 
+Desde los scripts tenemos también acceso a la librería estándar de
+Javascript. Por ejemplo, a `JSON`, la librería para procesar las
+estructuras de datos de JS y transformarlas a cadenas y viceversa.
+
+```javascript
+  var foo = [1,2,3, {clave: "Valor"}];
+  Logger.log(JSON.stringify(foo));
+``` 
+
+La segunda línea convierte a una cadena la estructura de datos
+compleja `foo`, lo que puede ser útil a la hora de depurar una
+aplicación *a la antigua*, imprimiendo variables aparte de "Estoy por
+aquí", "No debería estar aquí", y todo eso.
+
+Valga lo anterior como prueba de que la clase JSON está incluida en la
+librería estándar, aunque en realidad `Logger.log(foo)` haría
+exactamente lo mismo (con un resultado ligeramente diferente). No
+[todas las clases (objetos globales) de JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects)
+están presentes en el GAS, pero sí los principales. 
+
+##Vamos a hacer algo
+
+El script anterior no hace nada, pero es un ejemplo de un tipo de
+script denominado
+[*standalone*](https://developers.google.com/apps-script/guides/standalone),
+útil principalmente para usar el sistema como plataforma de
+cómputo. Pero, como se ha visto antes, estos scripts son los
+equivalentes a los de `bash` o de cualquier intérprete de
+comandos. Nos permiten acceder a lo que tenemos en el sistema. Por
+ejemplo, a los ficheros que tengamos en Google Drive, como vamos a
+hacer a continuación.
 
 
 
