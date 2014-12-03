@@ -146,6 +146,49 @@ funciones para aquellas que estén declaras:
 
 ![Captura de pantalla del IDE](logger.png)
 
+El primer programa se reduce a lo siguiente:
+
+```javascript
+function myFunction() {
+  Logger.log("¡Ola k ase!");
+}
+```
+
+Como podéis ver, es una función que se tiene que llamar precisamente
+así, `myFunction` y que no recibe ningún parámetro. Es Javascript, que
+es el lenguaje de *macros* de este entorno. Esta función será el
+equivalente al `main` de otros lenguajes: es la función que se llama
+al arrancar el script; puedes cambiarle el nombre, pero hasta que no
+guardes no podrás ejecutarla.
+
+Y contiene una sola orden,
+`Logger.log("¡Ola k
+ase!");`. [`Logger` es uno de los objetos estándar de GAS](https://developers.google.com/apps-script/reference/base/logger),
+disponible para todos y cada uno de los scripts que usemos y es un
+registro de las acciones de cada programa. No nos queda más remedio
+que usar esto para salida, al menos para empezar. Los *scripts* en GAS
+no tienen salida estándar y por tanto no pueden simplemente usar el
+`writeln` de JS o el `console.log` (sinceramente, esto no lo he
+probado). `log` añade una línea a ese registro, simplemente.
+
+Se puede ejecutar directamente con la flechita que aparece al lado del
+bicho (que es, lo pillasteis, para depurar o desenbichar). Te pedirá
+que le asignes un nombre y luego se olvidará de que querías
+ejecutarlo, así que luego lo ejecutas.
+
+Y no pasa nada. Le das de nuevo a ejecutar. Sigue sin pasar nada. ¿Qué
+ocurre? Nada. No, es broma. Ocurre que, efectivamente, donde pasa algo
+es en el registro, al que se accede dando a Control-Enter o al menú
+Ver -> Registros. Saldrá algo así:
+
+![Registro de resultados](registro.png)
+
+> Escribir un script que escriba en el registro una tabla de
+> multiplicar de un número determinado.
+
+
+
+
 
 
 
