@@ -67,7 +67,40 @@ visualizaciones sobre la misma.
 Lo interesante de todas estas aplicaciones es que van a ser accesibles
 desde los *scripts* y por tanto podremos trabajar con ellas
 dinámicamente o acceder a unas desde otras, usando todas sus funciones
-como si de una librería se tratara. Lo veremos a continuación.
+como si de una librería se tratara. Lo veremos a continuación, después de ver un par de cosas, la primera de las cuales es
+
+## El modelo de objetos
+
+Un sistema operativo incluye una serie de llamada que permite a los
+programas que se ejecutan sobre él acceder a las funciones del
+sistema: abrir y cerrar ficheros, reservar memoria y todas las
+operaciones de mayor o menor nivel.
+
+Los entornos de operación modernos incluyen una gama de posibiliades
+mucho mayor que el simple sistema operativo; también cambian de
+paradigma del procedural al orientado a objetos; en general, los
+sistemas operativos u entornos gráficos modernos incluyen un modelo de
+objetos (OM) al que se puede acceder desde el lenguaje preferido y,
+por supuesto, desde cualquier otra aplicación a la que se exponga el
+interfaz de programación (API). El navegador tiene un
+[DOM](http://es.wikipedia.org/wiki/Document_Object_Model), un modelo
+de objetos para documentos, que incluye una serie de objetos ya
+instanciados como `document` o `window`.
+
+Generalmente, un SaaS extensible como las Google Apps tienen una serie
+de objetos que permiten usar los llamados
+[servicios](https://developers.google.com/apps-script/guides/services/)
+de Google Apps. Todas las aplicaciones básicas y avanzadas tienen uno,
+y a veces varios objetos, y estos servicios se suelen llamar
+`AlgoApp`. Por ejemplo, Google Drive tiene
+[`DriveApp`](https://developers.google.com/apps-script/reference/drive/)
+y las hojas de cálculo la
+[`SpreadsheetApp`](https://developers.google.com/apps-script/reference/spreadsheet/spreadsheet-app). Todos
+estos objetos están instanciados y accesibles a todos los scripts que
+vayamos a usar.
+
+
+
 
 
 
