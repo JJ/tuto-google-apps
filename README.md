@@ -272,10 +272,110 @@ retrasado. En concreto, en mi Drive tarda varios minutos en terminar
 de ejecutarse, y obtengo algo así:
 
 ```
+[14-12-04 14:05:06:349 CET] (class).next() [0 segundos]
+[14-12-04 14:05:06:476 CET] File.getEditors() [0,126 segundos]
+[14-12-04 14:05:06:477 CET] Logger.log([[DriveUser], []]) [0 segundos]
+[14-12-04 14:05:06:477 CET] (class).hasNext() [0 segundos]
+[14-12-04 14:05:06:478 CET] (class).next() [0 segundos]
+[14-12-04 14:05:06:698 CET] File.getEditors() [0,22 segundos]
+[14-12-04 14:05:06:698 CET] Logger.log([[DriveUser], []]) [0 segundos]
+[14-12-04 14:05:06:699 CET] (class).hasNext() [0 segundos]
+[14-12-04 14:05:06:699 CET] (class).next() [0 segundos]
+[14-12-04 14:05:06:804 CET] File.getEditors() [0,105 segundos]
+[14-12-04 14:05:06:805 CET] Logger.log([[], []]) [0 segundos]
+[14-12-04 14:05:06:805 CET] (class).hasNext() [0 segundos]
+[14-12-04 14:05:06:805 CET] (class).next() [0 segundos]
+[14-12-04 14:05:06:936 CET] File.getEditors() [0,13 segundos]
+[14-12-04 14:05:06:937 CET] Logger.log([[DriveUser, DriveUser, DriveUser], []]) [0 segundos]
+[14-12-04 14:05:06:937 CET] (class).hasNext() [0 segundos]
+[14-12-04 14:05:06:938 CET] (class).next() [0 segundos]
+[14-12-04 14:05:07:149 CET] File.getEditors() [0,211 segundos]
+[14-12-04 14:05:07:150 CET] Logger.log([[], []]) [0 segundos]
+[14-12-04 14:05:07:151 CET] (class).hasNext() [0 segundos]
+[14-12-04 14:05:07:151 CET] (class).next() [0 segundos]
+[14-12-04 14:05:07:340 CET] File.getEditors() [0,188 segundos]
+[14-12-04 14:05:07:340 CET] Logger.log([[], []]) [0 segundos]
+[14-12-04 14:05:07:341 CET] (class).hasNext() [0 segundos]
+[14-12-04 14:05:07:348 CET] Ejecución correcta [325.825 segundos de tiempo de ejecución total]
+```
+Como se ve, cada petición de getEditor tarda un ratico, un quinto de
+segundo, lo que hace que al final tarde todo casi cinco
+minutos. Cuidado, por tanto, con este tipo de peticiones, sobre todo
+si tiene uno que esperar al resultado, porque pueden emplear una buena
+cantidad de tiempo. Por otro lado, si miramos el resultado es un poco
+decepcionante, porque aparece sólo DriveUser, así que tendremos que
+modificarlo para que nos dé el nombre de usuario; al menos con esto
+sabemos cuantos colaboradores hay:
 
+```javascript
+function colaboradores() {
+  var ficheros = DriveApp.getFiles();
+  var colaboradores = new Object;
+  var ficheros_array = new Object;
+  while (ficheros.hasNext()) {
+    var este_fichero = ficheros.next();
+    colaboradores[este_fichero] = este_fichero.getEditors();
+    Logger.log(colaboradores[este_fichero].map( function (ed) {
+      ed.getEmail();
+    }));
+  }
+  
+  var ficheros_por_colaboradores = Objectk.dreys(colaboradores.).sort( compara_num_colaboradores );
+  for ( var i in ficheros_por_colaboradores ) {
+    Logger.log( { i : colaboradores[ficheros_por_colaboradores[i]].length });
+  } 
+
+               
+}
+
+function compara_num_colaboradores( a, b ) {
+  return colaboradores[a].length - colaboradores[b].length;
+}
 ```
 
+De camino, también ordenamos los ficheros por número de colaboradores,
+lo que hace la función `compara_num_colaboradores`. Aquí hay un poco
+de programación funcional en JS, además por partida doble. Primero,
+usamos `map`, una función que aplica, a su vez, una función a cada uno
+de los elementos de un array. En este caso es un *closure* o función
+anónima, básicamente una función que declaramos sobre la
+marcha. También se pasa una función así a `sort`: es la función que se
+usa para clasificar y que en este caso lo hace según el número de
+colaboradores (longitud del array).
 
+> Realizar un script que recupere el *peso* de cada uno de los
+> ficheros almacenados en el Drive y liste sólo los PDFs.
+
+##Trabajando con varios documentos
+
+Finalmente (por hoy) podemos trabajar con varios documentos. Cada tipo
+de documento tiene un servicio y, por ejemplo, podemos almacenar los
+colaboradores en una hoja de cálculo para más adelante trabajar con
+ellos:
+
+```javascript
+function colaboradores() {
+  var ficheros = DriveApp.getFiles();
+  var hoja_destino = SpreadsheetApp.openById('1-D5cKkXalIdp5M2fhybqEtf5eQuFpBSTwM7HgsKgwfM');
+  var colaboradores = new Object;
+  var ficheros_array = new Object;
+  while (ficheros.hasNext()) {
+    var este_fichero = ficheros.next();
+    colaboradores[este_fichero] = este_fichero.getEditors();
+    hoja_destino.appendRow( [este_fichero, colaboradores[este_fichero] ]);
+  }
+ 
+}
+```
+
+Aquí usamos `SpreadsheetApp` y abrimos usando el ID (una parte del URL
+que se ve en la barra del navegador). El programa es similar al
+anterior, pero en este caso usamos el objeto `hoja_destino` para
+añadirle una fila `append_row` con el nombre del fichero y los
+colaboradores.
+
+> *Contar* el peso de los ficheros en un documento de texto, de esta
+> forma: "El fichero x tiene y megas.".
 
 
 
