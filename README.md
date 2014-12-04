@@ -246,6 +246,13 @@ elemento del iterador y devuelve un objeto de tipo
 [`File`](https://developers.google.com/apps-script/reference/drive/file),
 usando la metáfora del *drive* o disco como contenedor de *ficheros*. 
 
+Para ejecutar este script, incluso aunque sea nuestro, Google Drive
+nos pedirá autorización, ya que estamos trabajando con un servicio
+plasmado en el objeto `DriveApp`. El *pop-up* te indicará qué permisos
+concedes, que irán en función de las funciones que ejecutes de ese
+objeto. Evidentemente, hay que darle permiso y al ejecutarse, nos
+pondrá en el registro los nombres de los ficheros.
+
 
 
 
