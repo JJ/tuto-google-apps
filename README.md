@@ -374,12 +374,21 @@ anterior, pero en este caso usamos el objeto `hoja_destino` para
 añadirle una fila `append_row` con el nombre del fichero y los
 colaboradores.
 
-> *Contar* el peso de los ficheros en un documento de texto, de esta
+> *Contar* el peso de los ficheros en un  [documento de texto](https://developers.google.com/apps-script/reference/document/), de esta
 > forma: "El fichero x tiene y megas.".
 
+(Aviso: los programas de arriba no están del todo depurados, así que
+tu camino puede variar).
 
 
+## Concluyendo
 
+Google Drive permite tomar un primer contacto con el desarrollo de
+aplicaciones en la nube, al nivel *SaaS*. Los scripts pueden ir desde
+lo simple, hasta lo muy complejo que se puede publicar en la tienda de
+apps, convirtiéndose también en un nuevo modo de distribución de
+software. Y básicamente lo que hay que conocer es JavaScript y un poco
+del modelo de objetos.
 
 
 
