@@ -244,7 +244,38 @@ cuando no haya más ficheros. El mismo iterador se usa también para
 recuperar el siguiente elemento, `next` pasa el cursor al siguiente
 elemento del iterador y devuelve un objeto de tipo
 [`File`](https://developers.google.com/apps-script/reference/drive/file),
-usando la metáfora del *drive* o disco como contenedor de *ficheros*. 
+usando la metáfora del *drive* o disco como contenedor de *ficheros*.
+
+Esto podemos complicarlo un poquito más:
+```javascript
+function colaboradores() {
+  var ficheros = DriveApp.getFiles();
+  var colaboradores = new Object;
+  var ficheros_array = new Object;
+  while (ficheros.hasNext()) {
+    var este_fichero = ficheros.next();
+    colaboradores[este_fichero] = este_fichero.getEditors();
+    Logger.log(colaboradores[este_fichero]);
+  }
+  
+}
+```
+En este caso, lo que hacemos es usar una variable asociativa
+(`colaboradores`) para almacenar los editores que cada fichero tiene,
+usando otra de las funciones del objeto. Usamos Logger, pero tambien
+puede resultar útil otra función: Ver -> Transcripción de la
+ejecución, que nos explicita qué se ha hecho en cada momento y cuanto
+ha tardado cada ejecución, inclusive el objetivo final. Si tenemos
+muchos ficheros puede tardar un rato; consultando en este registro
+(que está activo siempre) podemos ver qué es lo que lo ha
+retrasado. En concreto, en mi Drive tarda varios minutos en terminar
+de ejecutarse, y obtengo algo así:
+
+```
+
+```
+
+
 
 
 
