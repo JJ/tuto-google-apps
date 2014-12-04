@@ -329,7 +329,7 @@ function colaboradores() {
     }));
   }
   
-  var ficheros_por_colaboradores = Objectk.dreys(colaboradores.).sort( compara_num_colaboradores );
+  var ficheros_por_colaboradores = Object.keys(colaboradores).sort( compara_num_colaboradores );
   for ( var i in ficheros_por_colaboradores ) {
     Logger.log( { i : colaboradores[ficheros_por_colaboradores[i]].length });
   } 
@@ -372,8 +372,7 @@ function colaboradores() {
     var este_fichero = ficheros.next();
     colaboradores[este_fichero] = este_fichero.getEditors();
     hoja_destino.appendRow( [este_fichero, colaboradores[este_fichero] ]);
-  }
- 
+  } 
 }
 ```
 
