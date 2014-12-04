@@ -99,6 +99,9 @@ y las hojas de cálculo la
 estos objetos están instanciados y accesibles a todos los scripts que
 vayamos a usar. Pero antes, tendremos que aprender sobre los
 
+> Buscar los objetos correspondientes a las diferentes aplicaciones de
+> Google Drive. ¿Cómo se llaman? ¿Cuantos tiene cada uno? 
+
 ## Métodos de autenticación
 
 Cuando se trabaja en la nube se está trabajando con un interfaz de
@@ -216,8 +219,32 @@ cómputo. Pero, como se ha visto antes, estos scripts son los
 equivalentes a los de `bash` o de cualquier intérprete de
 comandos. Nos permiten acceder a lo que tenemos en el sistema. Por
 ejemplo, a los ficheros que tengamos en Google Drive, como vamos a
-hacer a continuación.
+hacer a continuación. Por ejemplo, podemos buscar los ficheros que
+correspondan a un determinado criterio.
 
+```javascript
+function myFunction() {
+  var ficheros = DriveApp.getFiles();
+  while (ficheros.hasNext()) {
+    var este_fichero = ficheros.next();
+    Logger.log(este_fichero.getName());
+  }
+}
+```
+
+Este fichero es una transcripción directa del
+[ejemplo en la guía de referencia](https://developers.google.com/apps-script/reference/drive/). Simplemente
+lista el nombre de los ficheros que tengamos en drive. Usa `DriveApp`
+y una función de la misma (que aparecerá en un desplegable cuando lo
+escribamos), [`getFiles`](https://developers.google.com/apps-script/reference/drive/drive-app#getFiles%28%29) que, evidentemente, lo que devuelve es un *iterador* a los
+ficheros que tengamos en el drive, [clase `FileIterator`](https://developers.google.com/apps-script/reference/drive/file-iterator). Por eso no se
+recorre simplemente un array, sino que se usa la función `hasNext`
+para acceder al siguiente fichero de la lista; el bucle terminará
+cuando no haya más ficheros. El mismo iterador se usa también para
+recuperar el siguiente elemento, `next` pasa el cursor al siguiente
+elemento del iterador y devuelve un objeto de tipo
+[`File`](https://developers.google.com/apps-script/reference/drive/file),
+usando la metáfora del *drive* o disco como contenedor de *ficheros*. 
 
 
 
