@@ -307,7 +307,8 @@ de ejecutarse, y obtengo algo así:
 [14-12-04 14:05:07:341 CET] (class).hasNext() [0 segundos]
 [14-12-04 14:05:07:348 CET] Ejecución correcta [325.825 segundos de tiempo de ejecución total]
 ```
-Como se ve, cada petición de getEditor tarda un ratico, un quinto de
+Como se ve, cada petición de `getEditor` tarda un ratico (casi dos
+décimas de segundo la última), un quinto de 
 segundo, lo que hace que al final tarde todo casi cinco
 minutos. Cuidado, por tanto, con este tipo de peticiones, sobre todo
 si tiene uno que esperar al resultado, porque pueden emplear una buena
@@ -319,26 +320,28 @@ sabemos cuantos colaboradores hay:
 ```javascript
 function colaboradores() {
   var ficheros = DriveApp.getFiles();
-  var colaboradores = new Object;
+  var datos = new Object;
   var ficheros_array = new Object;
   while (ficheros.hasNext()) {
     var este_fichero = ficheros.next();
-    colaboradores[este_fichero] = este_fichero.getEditors();
-    Logger.log(colaboradores[este_fichero].map( function (ed) {
-      ed.getEmail();
-    }));
+    var este_ID = este_fichero.getId();
+    var editores = este_fichero.getEditors();
+    if ( editores.length > 0 ) {
+      datos[este_ID] = { eds: editores,nombre: este_fichero.getName() };
+      datos[este_ID].eds.map( function (ed) {
+        Logger.log("Ed " + ed.getEmail());
+      });
+    }
   }
   
-  var ficheros_por_colaboradores = Object.keys(colaboradores).sort( compara_num_colaboradores );
+  var ficheros_por_colaboradores = Object.keys(datos).sort( function( a, b ) {
+    return datos[b].eds.length - datos[a].eds.length;
+  } );
+  
   for ( var i in ficheros_por_colaboradores ) {
-    Logger.log( { i : colaboradores[ficheros_por_colaboradores[i]].length });
+    Logger.log(  datos[ficheros_por_colaboradores[i]].nombre + ": " + datos[ficheros_por_colaboradores[i]].eds.length );
   } 
-
                
-}
-
-function compara_num_colaboradores( a, b ) {
-  return colaboradores[a].length - colaboradores[b].length;
 }
 ```
 
