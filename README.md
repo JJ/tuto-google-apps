@@ -1,4 +1,4 @@
-Tutorial de Google App Script
+Tutorial de Google App Scripts
 =============================
 
 
@@ -395,6 +395,8 @@ un montón en mi caso, y los colaboradores que hay en cada uno de ellos.
 > *Contar* el peso de los ficheros en un  [documento de texto](https://developers.google.com/apps-script/reference/document/), de esta
 > forma: "El fichero x tiene y megas.".
 
+
+## Añadiendo los scripts a un documento
 
 ## Concluyendo
 
