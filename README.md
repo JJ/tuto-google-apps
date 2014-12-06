@@ -339,17 +339,17 @@ function colaboradores() {
   } );
   
   for ( var i in ficheros_por_colaboradores ) {
-    Logger.log(  datos[ficheros_por_colaboradores[i]].nombre + ": " + datos[ficheros_por_colaboradores[i]].eds.length );
+    Logger.log( datos[ficheros_por_colaboradores[i]].nombre + ": " + datos[ficheros_por_colaboradores[i]].eds.length );
   } 
                
 }
 ```
 
-De camino, también ordenamos los ficheros por número de colaboradores,
+De camino, también ordenamos los ficheros por número de colaboradores (editores),
 lo que hace la función `compara_num_colaboradores`. Aquí hay un poco
 de programación funcional en JS, además por partida doble. Primero,
 usamos `map`, una función que aplica, a su vez, una función a cada uno
-de los elementos de un array. En este caso es un *closure* o función
+de los elementos de un array. En este caso la función es un *closure* o función
 anónima, básicamente una función que declaramos sobre la
 marcha. También se pasa una función así a `sort`: es la función que se
 usa para clasificar y que en este caso lo hace según el número de
@@ -368,13 +368,17 @@ ellos:
 ```javascript
 function colaboradores() {
   var ficheros = DriveApp.getFiles();
-  var hoja_destino = SpreadsheetApp.openById('1-D5cKkXalIdp5M2fhybqEtf5eQuFpBSTwM7HgsKgwfM');
+  var hoja_destino = SpreadsheetApp.openById('Aquí-un-id-hoja-creada-antes');
   var colaboradores = new Object;
   var ficheros_array = new Object;
   while (ficheros.hasNext()) {
     var este_fichero = ficheros.next();
     colaboradores[este_fichero] = este_fichero.getEditors();
-    hoja_destino.appendRow( [este_fichero, colaboradores[este_fichero] ]);
+    var this_row = [ este_* con fichero ];
+    colaboradores[este_fichero].map( function( ed ) {
+      this_row.push( ed.getEmail() );
+    });
+    hoja_destino.appendRow( this_row );
   } 
 }
 ```
@@ -382,14 +386,14 @@ function colaboradores() {
 Aquí usamos `SpreadsheetApp` y abrimos usando el ID (una parte del URL
 que se ve en la barra del navegador). El programa es similar al
 anterior, pero en este caso usamos el objeto `hoja_destino` para
-añadirle una fila `append_row` con el nombre del fichero y los
-colaboradores.
+añadirle una fila `appendRow` con el nombre del fichero y los
+colaboradores. Usamos `push` para crear un *array* con los elementos
+que vamos a añadir como nueva fila de la hoja, que será variable en
+cada caso. Tendremos como resultado una hoja con todos los documentos,
+un montón en mi caso, y los colaboradores que hay en cada uno de ellos.
 
 > *Contar* el peso de los ficheros en un  [documento de texto](https://developers.google.com/apps-script/reference/document/), de esta
 > forma: "El fichero x tiene y megas.".
-
-(Aviso: los programas de arriba no están del todo depurados, así que
-tu camino puede variar).
 
 
 ## Concluyendo
