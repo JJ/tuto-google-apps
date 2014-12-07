@@ -399,8 +399,67 @@ un montón en mi caso, y los colaboradores que hay en cada uno de ellos.
 > *Contar* el peso de los ficheros en un  [documento de texto](https://developers.google.com/apps-script/reference/document/), de esta
 > forma: "El fichero x tiene y megas.".
 
-
 ## Añadiendo los scripts a un documento
+
+Algunos SaaS como Google Drive o, más propiamente, Google Apps,
+permiten crear también aplicaciones que trabajen con los datos y
+objetos que forman parte del mismo. Todos estos sistemas suelen
+incluir algún lenguaje de *scripting* y, en general, se suele tratar
+de JavaScript.
+
+El nivel de control que tiene uno sobre las aplicaciones es bastante
+variado. Se puede desde usar Google Drive como un PaaS para alojar
+aplicaciones hasta simplemente añadir pequeños *scripts* que lleven a
+cabo alguna labor como [cambiar el interfaz de usuario o añadir
+funcionalidad a alguna aplicación de Google Drive](https://developers.google.com/apps-script/overview).
+
+Crear un *script* para un documento en Google Drive es similar a hacer una macro para
+una aplicación. Se hace de la forma siguiente
+
+1. Ir a Herramientas -> Editor de secuencias de comandos. Se abre un
+   entorno de desarrollo para *scripts* en el que ya está prerrellena
+   la función que la añade al menú y a la que se llama.
+2. Se edita la función, se guarda y se publica.
+3. Se vuelve a abrir el documento correspondiente. Aparecerá un menú
+   nuevo, *Script Center Menu*, que incluirá un enlace con el nombre
+   de la aplicación.
+4. Cuando se ejecute por primera vez, pedirá que se autorice su uso.
+
+Por ejemplo, se puede asociar el siguiente *script* a una hoja de cálculo:
+```javascript
+function summarize_projects() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var output_sheet = SpreadsheetApp.openById("un_id_largo")
+  var rows = sheet.getDataRange();
+  var numRows = rows.getNumRows();
+  var values = rows.getValues();
+
+  // Delete output.
+  var output_range = output_sheet.getDataRange().getNumRows();
+  Logger.log(output_range);
+  output_sheet.deleteRows(1, output_range);
+  for (var i = 1; i < numRows; i++) {
+    output_sheet.appendRow([values[i][1],values[i][3],values[i][19]]);
+  }
+};
+
+function onOpen() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var entries = [{
+    name : "Resume proyectos",
+    functionName : "summarize_projects"
+  }];
+  spreadsheet.addMenu("Programillas", entries);
+};
+```
+
+De las dos funciones, miremos primero la segunda, `onOpen`, que crea una opción del menú en la hoja de cálculo en la que nos encontremos (`getActiveSpreadsheet`). Crea un menú llamado "Programillas", con una sola entrada, "Resume proyectos", que llama a la otra función.
+
+La otra función, `summarize_projects` es la que hace todo el trabajo: en este caso, lee de una hoja de cálculo (de proyectos inscritos en un concurso) y extrae sólo unas columnas: la 1, la 3 y la 19, que son las que contienen información genérica. Para que no se vaya añadiendo siempre al final, sino que se reescriba, tenemos que borrar el contenido de la web (`deleteRows`) y luego, con `appendRow`, igual que hemos hecho antes, añadir las filas en forma de array (con un elemento con columna).
+
+La principal diferencia con los ejemplos anteriores está en que estamos alterando el interfaz de usuario, añadiendo un nuevo desplegable, y también en la forma de usar el documento actual en el que estamos; habrá una función similar para cada uno de los tipos de documento.
+
+> Cread un script para una hoja de cálculo que resuma el contenido en un documento externo, por ejemplo diciendo algo así como "La fila x tiene como columna y el contenido z". Cread previamente el documento en el que se vaya a incluir este texto.
 
 ## Concluyendo
 
