@@ -147,7 +147,7 @@ a por el primero, el clásico hola mundo. Si creamos un script en
 blanco, nos saldrá algo así; el entorno completa los nombres de las
 funciones para aquellas que estén declaras:
 
-![Captura de pantalla del IDE](logger.png)
+![Captura de pantalla del IDE](img/logger.png)
 
 El primer programa se reduce a lo siguiente:
 
@@ -184,7 +184,7 @@ ocurre? Nada. No, es broma. Ocurre que, efectivamente, donde pasa algo
 es en el registro, al que se accede dando a Control-Enter o al menú
 Ver -> Registros. Saldrá algo así:
 
-![Registro de resultados](registro.png)
+![Registro de resultados](img/registro.png)
 
 > Escribir un script que escriba en el registro una tabla de
 > multiplicar de un número determinado.
