@@ -1,4 +1,4 @@
-Tutorial de Google App Script
+Tutorial de Google App Scripts
 =============================
 
 
@@ -246,6 +246,15 @@ elemento del iterador y devuelve un objeto de tipo
 [`File`](https://developers.google.com/apps-script/reference/drive/file),
 usando la metáfora del *drive* o disco como contenedor de *ficheros*.
 
+
+Para ejecutar este script, incluso aunque sea nuestro, Google Drive
+nos pedirá autorización, ya que estamos trabajando con un servicio
+plasmado en el objeto `DriveApp`. El *pop-up* te indicará qué permisos
+concedes, que irán en función de las funciones que ejecutes de ese
+objeto. Evidentemente, hay que darle permiso y al ejecutarse, nos
+pondrá en el registro los nombres de los ficheros.
+
+
 Esto podemos complicarlo un poquito más:
 ```javascript
 function colaboradores() {
@@ -298,7 +307,8 @@ de ejecutarse, y obtengo algo así:
 [14-12-04 14:05:07:341 CET] (class).hasNext() [0 segundos]
 [14-12-04 14:05:07:348 CET] Ejecución correcta [325.825 segundos de tiempo de ejecución total]
 ```
-Como se ve, cada petición de getEditor tarda un ratico, un quinto de
+Como se ve, cada petición de `getEditor` tarda un ratico (casi dos
+décimas de segundo la última), un quinto de 
 segundo, lo que hace que al final tarde todo casi cinco
 minutos. Cuidado, por tanto, con este tipo de peticiones, sobre todo
 si tiene uno que esperar al resultado, porque pueden emplear una buena
@@ -310,34 +320,36 @@ sabemos cuantos colaboradores hay:
 ```javascript
 function colaboradores() {
   var ficheros = DriveApp.getFiles();
-  var colaboradores = new Object;
+  var datos = new Object;
   var ficheros_array = new Object;
   while (ficheros.hasNext()) {
     var este_fichero = ficheros.next();
-    colaboradores[este_fichero] = este_fichero.getEditors();
-    Logger.log(colaboradores[este_fichero].map( function (ed) {
-      ed.getEmail();
-    }));
+    var este_ID = este_fichero.getId();
+    var editores = este_fichero.getEditors();
+    if ( editores.length > 0 ) {
+      datos[este_ID] = { eds: editores,nombre: este_fichero.getName() };
+      datos[este_ID].eds.map( function (ed) {
+        Logger.log("Ed " + ed.getEmail());
+      });
+    }
   }
   
-  var ficheros_por_colaboradores = Objectk.dreys(colaboradores.).sort( compara_num_colaboradores );
+  var ficheros_por_colaboradores = Object.keys(datos).sort( function( a, b ) {
+    return datos[b].eds.length - datos[a].eds.length;
+  } );
+  
   for ( var i in ficheros_por_colaboradores ) {
-    Logger.log( { i : colaboradores[ficheros_por_colaboradores[i]].length });
+    Logger.log( datos[ficheros_por_colaboradores[i]].nombre + ": " + datos[ficheros_por_colaboradores[i]].eds.length );
   } 
-
                
-}
-
-function compara_num_colaboradores( a, b ) {
-  return colaboradores[a].length - colaboradores[b].length;
 }
 ```
 
-De camino, también ordenamos los ficheros por número de colaboradores,
+De camino, también ordenamos los ficheros por número de colaboradores (editores),
 lo que hace la función `compara_num_colaboradores`. Aquí hay un poco
 de programación funcional en JS, además por partida doble. Primero,
 usamos `map`, una función que aplica, a su vez, una función a cada uno
-de los elementos de un array. En este caso es un *closure* o función
+de los elementos de un array. En este caso la función es un *closure* o función
 anónima, básicamente una función que declaramos sobre la
 marcha. También se pasa una función así a `sort`: es la función que se
 usa para clasificar y que en este caso lo hace según el número de
@@ -356,30 +368,94 @@ ellos:
 ```javascript
 function colaboradores() {
   var ficheros = DriveApp.getFiles();
-  var hoja_destino = SpreadsheetApp.openById('1-D5cKkXalIdp5M2fhybqEtf5eQuFpBSTwM7HgsKgwfM');
+  var hoja_destino = SpreadsheetApp.openById('Aquí-un-id-hoja-creada-antes');
   var colaboradores = new Object;
   var ficheros_array = new Object;
   while (ficheros.hasNext()) {
     var este_fichero = ficheros.next();
     colaboradores[este_fichero] = este_fichero.getEditors();
-    hoja_destino.appendRow( [este_fichero, colaboradores[este_fichero] ]);
-  }
- 
+    var this_row = [ este_* con fichero ];
+    colaboradores[este_fichero].map( function( ed ) {
+      this_row.push( ed.getEmail() );
+    });
+    hoja_destino.appendRow( this_row );
+  } 
 }
 ```
 
 Aquí usamos `SpreadsheetApp` y abrimos usando el ID (una parte del URL
 que se ve en la barra del navegador). El programa es similar al
 anterior, pero en este caso usamos el objeto `hoja_destino` para
-añadirle una fila `append_row` con el nombre del fichero y los
-colaboradores.
+añadirle una fila `appendRow` con el nombre del fichero y los
+colaboradores. Usamos `push` para crear un *array* con los elementos
+que vamos a añadir como nueva fila de la hoja, que será variable en
+cada caso. Tendremos como resultado una hoja con todos los documentos,
+un montón en mi caso, y los colaboradores que hay en cada uno de ellos.
 
 > *Contar* el peso de los ficheros en un  [documento de texto](https://developers.google.com/apps-script/reference/document/), de esta
 > forma: "El fichero x tiene y megas.".
 
-(Aviso: los programas de arriba no están del todo depurados, así que
-tu camino puede variar).
+## Añadiendo los scripts a un documento
 
+Algunos SaaS como Google Drive o, más propiamente, Google Apps,
+permiten crear también aplicaciones que trabajen con los datos y
+objetos que forman parte del mismo. Todos estos sistemas suelen
+incluir algún lenguaje de *scripting* y, en general, se suele tratar
+de JavaScript.
+
+El nivel de control que tiene uno sobre las aplicaciones es bastante
+variado. Se puede desde usar Google Drive como un PaaS para alojar
+aplicaciones hasta simplemente añadir pequeños *scripts* que lleven a
+cabo alguna labor como [cambiar el interfaz de usuario o añadir
+funcionalidad a alguna aplicación de Google Drive](https://developers.google.com/apps-script/overview).
+
+Crear un *script* para un documento en Google Drive es similar a hacer una macro para
+una aplicación. Se hace de la forma siguiente
+
+1. Ir a Herramientas -> Editor de secuencias de comandos. Se abre un
+   entorno de desarrollo para *scripts* en el que ya está prerrellena
+   la función que la añade al menú y a la que se llama.
+2. Se edita la función, se guarda y se publica.
+3. Se vuelve a abrir el documento correspondiente. Aparecerá un menú
+   nuevo, *Script Center Menu*, que incluirá un enlace con el nombre
+   de la aplicación.
+4. Cuando se ejecute por primera vez, pedirá que se autorice su uso.
+
+Por ejemplo, se puede asociar el siguiente *script* a una hoja de cálculo:
+```javascript
+function summarize_projects() {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var output_sheet = SpreadsheetApp.openById("un_id_largo")
+  var rows = sheet.getDataRange();
+  var numRows = rows.getNumRows();
+  var values = rows.getValues();
+
+  // Delete output.
+  var output_range = output_sheet.getDataRange().getNumRows();
+  Logger.log(output_range);
+  output_sheet.deleteRows(1, output_range);
+  for (var i = 1; i < numRows; i++) {
+    output_sheet.appendRow([values[i][1],values[i][3],values[i][19]]);
+  }
+};
+
+function onOpen() {
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var entries = [{
+    name : "Resume proyectos",
+    functionName : "summarize_projects"
+  }];
+  spreadsheet.addMenu("Programillas", entries);
+};
+```
+
+De las dos funciones, miremos primero la segunda, `onOpen`, que crea una opción del menú en la hoja de cálculo en la que nos encontremos (`getActiveSpreadsheet`). Crea un menú llamado "Programillas", con una sola entrada, "Resume proyectos", que llama a la otra función.
+
+La otra función, `summarize_projects` es la que hace todo el trabajo: en este caso, lee de una hoja de cálculo (de proyectos inscritos en un concurso) y extrae sólo unas columnas: la 1, la 3 y la 19, que son las que contienen información genérica. Para que no se vaya añadiendo siempre al final, sino que se reescriba, tenemos que borrar el contenido de la web (`deleteRows`) y luego, con `appendRow`, igual que hemos hecho antes, añadir las filas en forma de array (con un elemento con columna).
+
+La principal diferencia con los ejemplos anteriores está en que estamos alterando el interfaz de usuario, añadiendo un nuevo desplegable, y también en la forma de usar el documento actual en el que estamos; habrá una función similar para cada uno de los tipos de documento.
+
+> Cread un script para una hoja de cálculo que resuma el contenido en un documento externo, por ejemplo diciendo algo así como "La fila x tiene como columna y el contenido z". Cread previamente el documento en el que se vaya a incluir este texto.
 
 ## Concluyendo
 
