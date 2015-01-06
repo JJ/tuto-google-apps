@@ -1,6 +1,12 @@
-Tutorial de Google App Scripts
+Usando Google App Scripts
 =============================
 
+
+## Objetivos
+
+1. Conocer los conceptos generales del Software como Servicio (*SaaS*).
+2. Crear *scripts* simples en Javascript con el modelo de objetos de Google App Engine.
+3. Trabajar con una DBaaS.
 
 ## Empecemos por el principio
 
@@ -459,14 +465,61 @@ La otra función, `summarize_projects` es la que hace todo el trabajo: en este c
 
 La principal diferencia con los ejemplos anteriores está en que estamos alterando el interfaz de usuario, añadiendo un nuevo desplegable, y también en la forma de usar el documento actual en el que estamos; habrá una función similar para cada uno de los tipos de documento.
 
-> Cread un script para una hoja de cálculo que resuma el contenido en un documento externo, por ejemplo diciendo algo así como "La fila x tiene como columna y el contenido z". Cread previamente el documento en el que se vaya a incluir este texto.
+> Cread un script para una hoja de cálculo que resuma el contenido en
+> un documento externo, por ejemplo diciendo algo así como "La fila x
+> tiene como columna y el contenido z". Cread previamente el documento
+> en el que se vaya a incluir este texto. 
+
+## Bases de datos como servicio
+
+Como las bases de datos son, en realidad, una aplicación como otra
+cualquiera,
+[las bases de datos como servicio, bases de datos en la nube o *DBaaS*](http://en.wikipedia.org/wiki/Cloud_database)
+encajan mejor dentro de este texto que de ningún otro sitio, aunque en
+realidad no son una solución completa, sino que se tienen que combinar
+con un PaaS o un IaaS para crear una aplicación. Sin embargo, es
+conveniente tener conocimiento de ellas, puesto que los PaaS a que se
+verán a continación las usan.
+
+Los DBaaS ofrecen acceso tanto bases de datos clásicas, es decir, con
+el lenguaje SQL, como a bases de datos *sin esquemas* o NoSQL como
+Redis, CouchDB o MongoDB. También hay modelos *freemium* o gratuitos
+con tarjeta de crédito, tales como
+[Amazon DynamoDB](http://aws.amazon.com/es/dynamodb/?nc2=h_l3_db) o
+[ClearDB, que provee servicio MySQL](https://www.cleardb.com/pricing.view). La
+mayoría de los PaaS, por otro lado, ofrecen también DBaaS como
+añadidos a sus plataformas; es decir, tarde o temprano se acabarán
+usando.
+
+Vamos a aprovechar que estamos hablando de nuevas bases de datos para
+trabajar con [Redis](http://redis.io). Redis es una base de datos no
+persistente, en memoria, de altas prestaciones, y que permite trabajar
+de forma muy eficiente con estructuras de datos simples. Otros
+sistemas noSQL como CouchDB o MongoDB también son bastante populares,
+pero Redis se está convirtiendo en uno de los estándares emergentes y
+tiene buen soporte en JavaScript, tanto en cliente como en node.
+
+>En este momento, si no se ha hecho antes, se deberá instalar
+>[Node](http://nodejs.org), un intérprete de Javascript para usar en
+>servidores o en línea de órdenes. No es el objetivo de este texto
+>enseñar ni node ni JavaScript, del que tendrías que tener cierto
+>conocimiento previo. Si quieres aprender, hay un *cough* *cough*
+>excelente
+>[texto introductorio](https://www.amazon.es/dp/B00HXL8QA0?tag=atalaya-21&camp=3634&creative=24822&linkCode=as4&creativeASIN=B00HXL8QA0&adid=1TS47T651FGQTKED28CV&)
+>por menos de un euro en Amazon (o libre en GitHub).
+
+En vez de ir característica por característica, vamos a empezar
+trabajando con un sistema cliente-servidor para hacer porras
+futbolísticas con el que seguiremos trabajando más adelante.
+
 
 ## Concluyendo
 
 Google Drive permite tomar un primer contacto con el desarrollo de
-aplicaciones en la nube, al nivel *SaaS*. Los scripts pueden ir desde
-lo simple, hasta lo muy complejo que se puede publicar en la tienda de
-apps, convirtiéndose también en un nuevo modo de distribución de
+aplicaciones en la nube, al nivel *SaaS*, el superior (o inferior,
+según se mire). Los scripts pueden ir desde
+la simple utilidad aplicada a un documento, hasta lo muy complejo que se puede publicar en la tienda de
+*apps*, convirtiéndo a la plataforma SaaS  en un nuevo modo de distribución de
 software. Y básicamente lo que hay que conocer es JavaScript y un poco
 del modelo de objetos.
 
