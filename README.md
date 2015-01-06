@@ -165,8 +165,7 @@ al arrancar el script; puedes cambiarle el nombre, pero hasta que no
 guardes no podrás ejecutarla.
 
 Y contiene una sola orden,
-`Logger.log("¡Ola k
-ase!");`. [`Logger` es uno de los objetos estándar de GAS](https://developers.google.com/apps-script/reference/base/logger),
+`Logger.log("¡Ola k ase!");`. [`Logger` es uno de los objetos estándar de GAS](https://developers.google.com/apps-script/reference/base/logger),
 disponible para todos y cada uno de los scripts que usemos y es un
 registro de las acciones de cada programa. No nos queda más remedio
 que usar esto para salida, al menos para empezar. Los *scripts* en GAS
@@ -421,7 +420,9 @@ una aplicación. Se hace de la forma siguiente
    de la aplicación.
 4. Cuando se ejecute por primera vez, pedirá que se autorice su uso.
 
-Por ejemplo, se puede asociar el siguiente *script* a una hoja de cálculo:
+Por ejemplo, se puede asociar el siguiente *script* a una hoja de
+cálculo:
+
 ```javascript
 function summarize_projects() {
   var sheet = SpreadsheetApp.getActiveSheet();
@@ -449,7 +450,10 @@ function onOpen() {
 };
 ```
 
-De las dos funciones, miremos primero la segunda, `onOpen`, que crea una opción del menú en la hoja de cálculo en la que nos encontremos (`getActiveSpreadsheet`). Crea un menú llamado "Programillas", con una sola entrada, "Resume proyectos", que llama a la otra función.
+De las dos funciones, miremos primero la segunda, `onOpen`, que crea
+  una opción del menú en la hoja de cálculo en la que nos encontremos
+  (`getActiveSpreadsheet`). Crea un menú llamado "Programillas", con
+  una sola entrada, "Resume proyectos", que llama a la otra función.
 
 La otra función, `summarize_projects` es la que hace todo el trabajo: en este caso, lee de una hoja de cálculo (de proyectos inscritos en un concurso) y extrae sólo unas columnas: la 1, la 3 y la 19, que son las que contienen información genérica. Para que no se vaya añadiendo siempre al final, sino que se reescriba, tenemos que borrar el contenido de la web (`deleteRows`) y luego, con `appendRow`, igual que hemos hecho antes, añadir las filas en forma de array (con un elemento con columna).
 
