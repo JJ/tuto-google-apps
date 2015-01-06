@@ -1,6 +1,13 @@
-Tutorial de Google App Scripts
+Usando Google App Scripts
 =============================
 
+
+## Objetivos
+
+1. Conocer los conceptos generales del Software como Servicio (*SaaS*).
+2. Crear *scripts* simples en Javascript.
+3. Conocer el modelo de objetos de Google App Engine y usarlo en
+   programas simples.
 
 ## Empecemos por el principio
 
@@ -147,7 +154,7 @@ a por el primero, el clásico hola mundo. Si creamos un script en
 blanco, nos saldrá algo así; el entorno completa los nombres de las
 funciones para aquellas que estén declaras:
 
-![Captura de pantalla del IDE](logger.png)
+![Captura de pantalla del IDE](img/logger.png)
 
 El primer programa se reduce a lo siguiente:
 
@@ -165,8 +172,7 @@ al arrancar el script; puedes cambiarle el nombre, pero hasta que no
 guardes no podrás ejecutarla.
 
 Y contiene una sola orden,
-`Logger.log("¡Ola k
-ase!");`. [`Logger` es uno de los objetos estándar de GAS](https://developers.google.com/apps-script/reference/base/logger),
+`Logger.log("¡Ola k ase!");`. [`Logger` es uno de los objetos estándar de GAS](https://developers.google.com/apps-script/reference/base/logger),
 disponible para todos y cada uno de los scripts que usemos y es un
 registro de las acciones de cada programa. No nos queda más remedio
 que usar esto para salida, al menos para empezar. Los *scripts* en GAS
@@ -184,7 +190,7 @@ ocurre? Nada. No, es broma. Ocurre que, efectivamente, donde pasa algo
 es en el registro, al que se accede dando a Control-Enter o al menú
 Ver -> Registros. Saldrá algo así:
 
-![Registro de resultados](registro.png)
+![Registro de resultados](img/registro.png)
 
 > Escribir un script que escriba en el registro una tabla de
 > multiplicar de un número determinado.
@@ -421,7 +427,9 @@ una aplicación. Se hace de la forma siguiente
    de la aplicación.
 4. Cuando se ejecute por primera vez, pedirá que se autorice su uso.
 
-Por ejemplo, se puede asociar el siguiente *script* a una hoja de cálculo:
+Por ejemplo, se puede asociar el siguiente *script* a una hoja de
+cálculo:
+
 ```javascript
 function summarize_projects() {
   var sheet = SpreadsheetApp.getActiveSheet();
@@ -449,20 +457,29 @@ function onOpen() {
 };
 ```
 
-De las dos funciones, miremos primero la segunda, `onOpen`, que crea una opción del menú en la hoja de cálculo en la que nos encontremos (`getActiveSpreadsheet`). Crea un menú llamado "Programillas", con una sola entrada, "Resume proyectos", que llama a la otra función.
+De las dos funciones, miremos primero la segunda, `onOpen`, que crea
+  una opción del menú en la hoja de cálculo en la que nos encontremos
+  (`getActiveSpreadsheet`). Crea un menú llamado "Programillas", con
+  una sola entrada, "Resume proyectos", que llama a la otra función.
 
 La otra función, `summarize_projects` es la que hace todo el trabajo: en este caso, lee de una hoja de cálculo (de proyectos inscritos en un concurso) y extrae sólo unas columnas: la 1, la 3 y la 19, que son las que contienen información genérica. Para que no se vaya añadiendo siempre al final, sino que se reescriba, tenemos que borrar el contenido de la web (`deleteRows`) y luego, con `appendRow`, igual que hemos hecho antes, añadir las filas en forma de array (con un elemento con columna).
 
 La principal diferencia con los ejemplos anteriores está en que estamos alterando el interfaz de usuario, añadiendo un nuevo desplegable, y también en la forma de usar el documento actual en el que estamos; habrá una función similar para cada uno de los tipos de documento.
 
-> Cread un script para una hoja de cálculo que resuma el contenido en un documento externo, por ejemplo diciendo algo así como "La fila x tiene como columna y el contenido z". Cread previamente el documento en el que se vaya a incluir este texto.
+> Cread un script para una hoja de cálculo que resuma el contenido en
+> un documento externo, por ejemplo diciendo algo así como "La fila x
+> tiene como columna y el contenido z". Cread previamente el documento
+> en el que se vaya a incluir este texto. 
+
+
 
 ## Concluyendo
 
 Google Drive permite tomar un primer contacto con el desarrollo de
-aplicaciones en la nube, al nivel *SaaS*. Los scripts pueden ir desde
-lo simple, hasta lo muy complejo que se puede publicar en la tienda de
-apps, convirtiéndose también en un nuevo modo de distribución de
+aplicaciones en la nube, al nivel *SaaS*, el superior (o inferior,
+según se mire). Los scripts pueden ir desde
+la simple utilidad aplicada a un documento, hasta lo muy complejo que se puede publicar en la tienda de
+*apps*, convirtiéndo a la plataforma SaaS  en un nuevo modo de distribución de
 software. Y básicamente lo que hay que conocer es JavaScript y un poco
 del modelo de objetos.
 
