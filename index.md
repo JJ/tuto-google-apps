@@ -162,11 +162,11 @@ funciones para aquellas que estén declaras:
 
 El primer programa se reduce a lo siguiente:
 
-```javascript
-function myFunction() {
-  Logger.log("¡Ola k ase!");
-}
-```
+
+	function myFunction() {
+	  Logger.log("¡Ola k ase!");
+	}
+
 
 Como podéis ver, es una función que se tiene que llamar precisamente
 así, `myFunction` y que no recibe ningún parámetro. Es Javascript, que
@@ -203,10 +203,10 @@ Desde los scripts tenemos también acceso a la librería estándar de
 Javascript. Por ejemplo, a `JSON`, la librería para procesar las
 estructuras de datos de JS y transformarlas a cadenas y viceversa.
 
-```javascript
-  var foo = [1,2,3, {clave: "Valor"}];
-  Logger.log(JSON.stringify(foo));
-``` 
+
+    var foo = [1,2,3, {clave: "Valor"}];
+    Logger.log(JSON.stringify(foo));
+
 
 La segunda línea convierte a una cadena la estructura de datos
 compleja `foo`, lo que puede ser útil a la hora de depurar una
@@ -232,15 +232,15 @@ ejemplo, a los ficheros que tengamos en Google Drive, como vamos a
 hacer a continuación. Por ejemplo, podemos buscar los ficheros que
 correspondan a un determinado criterio.
 
-```javascript
-function myFunction() {
-  var ficheros = DriveApp.getFiles();
-  while (ficheros.hasNext()) {
-    var este_fichero = ficheros.next();
-    Logger.log(este_fichero.getName());
-  }
-}
-```
+
+	function myFunction() {
+	  var ficheros = DriveApp.getFiles();
+	  while (ficheros.hasNext()) {
+		var este_fichero = ficheros.next();
+		Logger.log(este_fichero.getName());
+	  }
+	}
+
 
 Este fichero es una transcripción directa del
 [ejemplo en la guía de referencia](https://developers.google.com/apps-script/reference/drive/). Simplemente
@@ -266,19 +266,19 @@ pondrá en el registro los nombres de los ficheros.
 
 
 Esto podemos complicarlo un poquito más:
-```javascript
-function colaboradores() {
-  var ficheros = DriveApp.getFiles();
-  var colaboradores = new Object;
-  var ficheros_array = new Object;
-  while (ficheros.hasNext()) {
-    var este_fichero = ficheros.next();
-    colaboradores[este_fichero] = este_fichero.getEditors();
-    Logger.log(colaboradores[este_fichero]);
-  }
-  
-}
-```
+
+	function colaboradores() {
+	  var ficheros = DriveApp.getFiles();
+	  var colaboradores = new Object;
+	  var ficheros_array = new Object;
+	  while (ficheros.hasNext()) {
+		var este_fichero = ficheros.next();
+		colaboradores[este_fichero] = este_fichero.getEditors();
+		Logger.log(colaboradores[este_fichero]);
+	  }
+
+	}
+
 En este caso, lo que hacemos es usar una variable asociativa
 (`colaboradores`) para almacenar los editores que cada fichero tiene,
 usando otra de las funciones del objeto. Usamos Logger, pero tambien
@@ -290,33 +290,33 @@ muchos ficheros puede tardar un rato; consultando en este registro
 retrasado. En concreto, en mi Drive tarda varios minutos en terminar
 de ejecutarse, y obtengo algo así:
 
-```
-[14-12-04 14:05:06:349 CET] (class).next() [0 segundos]
-[14-12-04 14:05:06:476 CET] File.getEditors() [0,126 segundos]
-[14-12-04 14:05:06:477 CET] Logger.log([[DriveUser], []]) [0 segundos]
-[14-12-04 14:05:06:477 CET] (class).hasNext() [0 segundos]
-[14-12-04 14:05:06:478 CET] (class).next() [0 segundos]
-[14-12-04 14:05:06:698 CET] File.getEditors() [0,22 segundos]
-[14-12-04 14:05:06:698 CET] Logger.log([[DriveUser], []]) [0 segundos]
-[14-12-04 14:05:06:699 CET] (class).hasNext() [0 segundos]
-[14-12-04 14:05:06:699 CET] (class).next() [0 segundos]
-[14-12-04 14:05:06:804 CET] File.getEditors() [0,105 segundos]
-[14-12-04 14:05:06:805 CET] Logger.log([[], []]) [0 segundos]
-[14-12-04 14:05:06:805 CET] (class).hasNext() [0 segundos]
-[14-12-04 14:05:06:805 CET] (class).next() [0 segundos]
-[14-12-04 14:05:06:936 CET] File.getEditors() [0,13 segundos]
-[14-12-04 14:05:06:937 CET] Logger.log([[DriveUser, DriveUser, DriveUser], []]) [0 segundos]
-[14-12-04 14:05:06:937 CET] (class).hasNext() [0 segundos]
-[14-12-04 14:05:06:938 CET] (class).next() [0 segundos]
-[14-12-04 14:05:07:149 CET] File.getEditors() [0,211 segundos]
-[14-12-04 14:05:07:150 CET] Logger.log([[], []]) [0 segundos]
-[14-12-04 14:05:07:151 CET] (class).hasNext() [0 segundos]
-[14-12-04 14:05:07:151 CET] (class).next() [0 segundos]
-[14-12-04 14:05:07:340 CET] File.getEditors() [0,188 segundos]
-[14-12-04 14:05:07:340 CET] Logger.log([[], []]) [0 segundos]
-[14-12-04 14:05:07:341 CET] (class).hasNext() [0 segundos]
-[14-12-04 14:05:07:348 CET] Ejecución correcta [325.825 segundos de tiempo de ejecución total]
-```
+
+	[14-12-04 14:05:06:349 CET] (class).next() [0 segundos]
+	[14-12-04 14:05:06:476 CET] File.getEditors() [0,126 segundos]
+	[14-12-04 14:05:06:477 CET] Logger.log([[DriveUser], []]) [0 segundos]
+	[14-12-04 14:05:06:477 CET] (class).hasNext() [0 segundos]
+	[14-12-04 14:05:06:478 CET] (class).next() [0 segundos]
+	[14-12-04 14:05:06:698 CET] File.getEditors() [0,22 segundos]
+	[14-12-04 14:05:06:698 CET] Logger.log([[DriveUser], []]) [0 segundos]
+	[14-12-04 14:05:06:699 CET] (class).hasNext() [0 segundos]
+	[14-12-04 14:05:06:699 CET] (class).next() [0 segundos]
+	[14-12-04 14:05:06:804 CET] File.getEditors() [0,105 segundos]
+	[14-12-04 14:05:06:805 CET] Logger.log([[], []]) [0 segundos]
+	[14-12-04 14:05:06:805 CET] (class).hasNext() [0 segundos]
+	[14-12-04 14:05:06:805 CET] (class).next() [0 segundos]
+	[14-12-04 14:05:06:936 CET] File.getEditors() [0,13 segundos]
+	[14-12-04 14:05:06:937 CET] Logger.log([[DriveUser, DriveUser, DriveUser], []]) [0 segundos]
+	[14-12-04 14:05:06:937 CET] (class).hasNext() [0 segundos]
+	[14-12-04 14:05:06:938 CET] (class).next() [0 segundos]
+	[14-12-04 14:05:07:149 CET] File.getEditors() [0,211 segundos]
+	[14-12-04 14:05:07:150 CET] Logger.log([[], []]) [0 segundos]
+	[14-12-04 14:05:07:151 CET] (class).hasNext() [0 segundos]
+	[14-12-04 14:05:07:151 CET] (class).next() [0 segundos]
+	[14-12-04 14:05:07:340 CET] File.getEditors() [0,188 segundos]
+	[14-12-04 14:05:07:340 CET] Logger.log([[], []]) [0 segundos]
+	[14-12-04 14:05:07:341 CET] (class).hasNext() [0 segundos]
+	[14-12-04 14:05:07:348 CET] Ejecución correcta [325.825 segundos de tiempo de ejecución total]
+
 Como se ve, cada petición de `getEditor` tarda un ratico (casi dos
 décimas de segundo la última), un quinto de 
 segundo, lo que hace que al final tarde todo casi cinco
@@ -327,33 +327,33 @@ decepcionante, porque aparece sólo DriveUser, así que tendremos que
 modificarlo para que nos dé el nombre de usuario; al menos con esto
 sabemos cuantos colaboradores hay:
 
-```javascript
-function colaboradores() {
-  var ficheros = DriveApp.getFiles();
-  var datos = new Object;
-  var ficheros_array = new Object;
-  while (ficheros.hasNext()) {
-    var este_fichero = ficheros.next();
-    var este_ID = este_fichero.getId();
-    var editores = este_fichero.getEditors();
-    if ( editores.length > 0 ) {
-      datos[este_ID] = { eds: editores,nombre: este_fichero.getName() };
-      datos[este_ID].eds.map( function (ed) {
-        Logger.log("Ed " + ed.getEmail());
-      });
-    }
-  }
-  
-  var ficheros_por_colaboradores = Object.keys(datos).sort( function( a, b ) {
-    return datos[b].eds.length - datos[a].eds.length;
-  } );
-  
-  for ( var i in ficheros_por_colaboradores ) {
-    Logger.log( datos[ficheros_por_colaboradores[i]].nombre + ": " + datos[ficheros_por_colaboradores[i]].eds.length );
-  } 
-               
-}
-```
+
+	function colaboradores() {
+	  var ficheros = DriveApp.getFiles();
+	  var datos = new Object;
+	  var ficheros_array = new Object;
+	  while (ficheros.hasNext()) {
+		var este_fichero = ficheros.next();
+		var este_ID = este_fichero.getId();
+		var editores = este_fichero.getEditors();
+		if ( editores.length > 0 ) {
+		  datos[este_ID] = { eds: editores,nombre: este_fichero.getName() };
+		  datos[este_ID].eds.map( function (ed) {
+			Logger.log("Ed " + ed.getEmail());
+		  });
+		}
+	  }
+
+	  var ficheros_por_colaboradores = Object.keys(datos).sort( function( a, b ) {
+		return datos[b].eds.length - datos[a].eds.length;
+	  } );
+
+	  for ( var i in ficheros_por_colaboradores ) {
+		Logger.log( datos[ficheros_por_colaboradores[i]].nombre + ": " + datos[ficheros_por_colaboradores[i]].eds.length );
+	  } 
+
+	}
+
 
 De camino, también ordenamos los ficheros por número de colaboradores (editores),
 lo que hace la función `compara_num_colaboradores`. Aquí hay un poco
@@ -375,23 +375,23 @@ de documento tiene un servicio y, por ejemplo, podemos almacenar los
 colaboradores en una hoja de cálculo para más adelante trabajar con
 ellos:
 
-```javascript
-function colaboradores() {
-  var ficheros = DriveApp.getFiles();
-  var hoja_destino = SpreadsheetApp.openById('Aquí-un-id-hoja-creada-antes');
-  var colaboradores = new Object;
-  var ficheros_array = new Object;
-  while (ficheros.hasNext()) {
-    var este_fichero = ficheros.next();
-    colaboradores[este_fichero] = este_fichero.getEditors();
-    var this_row = [ este_* con fichero ];
-    colaboradores[este_fichero].map( function( ed ) {
-      this_row.push( ed.getEmail() );
-    });
-    hoja_destino.appendRow( this_row );
-  } 
-}
-```
+
+	function colaboradores() {
+	  var ficheros = DriveApp.getFiles();
+	  var hoja_destino = SpreadsheetApp.openById('Aquí-un-id-hoja-creada-antes');
+	  var colaboradores = new Object;
+	  var ficheros_array = new Object;
+	  while (ficheros.hasNext()) {
+		var este_fichero = ficheros.next();
+		colaboradores[este_fichero] = este_fichero.getEditors();
+		var this_row = [ este_* con fichero ];
+		colaboradores[este_fichero].map( function( ed ) {
+		  this_row.push( ed.getEmail() );
+		});
+		hoja_destino.appendRow( this_row );
+	  } 
+	}
+
 
 Aquí usamos `SpreadsheetApp` y abrimos usando el ID (una parte del URL
 que se ve en la barra del navegador). El programa es similar al
@@ -434,32 +434,32 @@ una aplicación. Se hace de la forma siguiente
 Por ejemplo, se puede asociar el siguiente *script* a una hoja de
 cálculo:
 
-```javascript
-function summarize_projects() {
-  var sheet = SpreadsheetApp.getActiveSheet();
-  var output_sheet = SpreadsheetApp.openById("un_id_largo")
-  var rows = sheet.getDataRange();
-  var numRows = rows.getNumRows();
-  var values = rows.getValues();
 
-  // Delete output.
-  var output_range = output_sheet.getDataRange().getNumRows();
-  Logger.log(output_range);
-  output_sheet.deleteRows(1, output_range);
-  for (var i = 1; i < numRows; i++) {
-    output_sheet.appendRow([values[i][1],values[i][3],values[i][19]]);
-  }
-};
+	function summarize_projects() {
+	  var sheet = SpreadsheetApp.getActiveSheet();
+	  var output_sheet = SpreadsheetApp.openById("un_id_largo")
+	  var rows = sheet.getDataRange();
+	  var numRows = rows.getNumRows();
+	  var values = rows.getValues();
 
-function onOpen() {
-  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  var entries = [{
-    name : "Resume proyectos",
-    functionName : "summarize_projects"
-  }];
-  spreadsheet.addMenu("Programillas", entries);
-};
-```
+	  // Delete output.
+	  var output_range = output_sheet.getDataRange().getNumRows();
+	  Logger.log(output_range);
+	  output_sheet.deleteRows(1, output_range);
+	  for (var i = 1; i < numRows; i++) {
+		output_sheet.appendRow([values[i][1],values[i][3],values[i][19]]);
+	  }
+	};
+
+	function onOpen() {
+	  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+	  var entries = [{
+		name : "Resume proyectos",
+		functionName : "summarize_projects"
+	  }];
+	  spreadsheet.addMenu("Programillas", entries);
+	};
+
 
 De las dos funciones, miremos primero la segunda, `onOpen`, que crea
   una opción del menú en la hoja de cálculo en la que nos encontremos
@@ -474,7 +474,6 @@ La principal diferencia con los ejemplos anteriores está en que estamos alteran
 > un documento externo, por ejemplo diciendo algo así como "La fila x
 > tiene como columna y el contenido z". Cread previamente el documento
 > en el que se vaya a incluir este texto. 
-
 
 
 ## Concluyendo
