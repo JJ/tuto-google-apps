@@ -467,8 +467,8 @@ La otra función, `summarize_projects` es la que hace todo el trabajo: en este c
 La principal diferencia con los ejemplos anteriores está en que estamos alterando el interfaz de usuario, añadiendo un nuevo desplegable, y también en la forma de usar el documento actual en el que estamos; habrá una función similar para cada uno de los tipos de documento.
 
 > Cread un script para una hoja de cálculo que resuma el contenido en
-> un documento externo, por ejemplo diciendo algo así como "La fila x
-> tiene como columna y el contenido z". Cread previamente el documento
+> un documento externo, por ejemplo diciendo algo así como "La fila *x*
+> tiene como columna *y* el contenido *z*". Cread previamente el documento
 > en el que se vaya a incluir este texto. 
 
 
