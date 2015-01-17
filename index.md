@@ -18,7 +18,7 @@ Usando Google App Scripts
 [Software as a Service o SaaS](http://es.wikipedia.org/wiki/Software_como_servicio)
 es un modelo de uso de software en el cual parte, o toda, la lógica de
 la aplicación está en la web. Podemos denominar SaaS tanto a las
-apliaciones ricas de Internet (con un interfaz como el de cualquiera
+aplicaciones ricas de Internet (con un interfaz como el de cualquiera
 aplicación de escritorio) como a aplicaciones *clásicas* basadas en
 formularios, pero en propiedad se corresponde más a las primeras.
 
@@ -30,7 +30,7 @@ posteriormente, por uso en diferentes modalidades, tarifa plana o por
 intensidad de uso.
 
 Muchas aplicaciones, además, son un *marco* sobre el cual se pueden
-desarrollar funcionalidades adicionalees. A modo de sistema operativo,
+desarrollar funcionalidades adicionales. A modo de sistema operativo,
 ofrecen una serie de servicios a los que se puede acceder a modo de
 *plugins* o *addons*. Los lenguajes usados para esto son generalmente
 Javascript u otros lenguajes *empotrados* como Lua, aunque algunos
@@ -69,7 +69,7 @@ dinámica.
 
 Una de las aplicaciones más desconocidas y más útiles son las Tablas
 Dinámicas de Google (o *Fusion Tables*). Se puede usar como punto de
-partida una hoja de cálculo qeu tengamos almacenada, pero tiene
+partida una hoja de cálculo que tengamos almacenada, pero tiene
 también una serie de demos que muestran lo que es capaz de
 hacer. Aparte de presentar la información de la hoja de diferentes
 formas, es capaz de situarla sobre un mapa y de crear todo tipo de
@@ -87,7 +87,7 @@ programas que se ejecutan sobre él acceder a las funciones del
 sistema: abrir y cerrar ficheros, reservar memoria y todas las
 operaciones de mayor o menor nivel.
 
-Los entornos de operación modernos incluyen una gama de posibiliades
+Los entornos de operación modernos incluyen una gama de posibilidades
 mucho mayor que el simple sistema operativo; también cambian de
 paradigma del procedural al orientado a objetos; en general, los
 sistemas operativos u entornos gráficos modernos incluyen un modelo de
@@ -185,7 +185,7 @@ no tienen salida estándar y por tanto no pueden simplemente usar el
 probado). `log` añade una línea a ese registro, simplemente.
 
 Se puede ejecutar directamente con la flechita que aparece al lado del
-bicho (que es, lo pillasteis, para depurar o desenbichar). Te pedirá
+bicho (que es, lo pillasteis, para depurar o desembichar). Te pedirá
 que le asignes un nombre y luego se olvidará de que querías
 ejecutarlo, así que luego lo ejecutas.
 
@@ -281,7 +281,7 @@ Esto podemos complicarlo un poquito más:
 
 En este caso, lo que hacemos es usar una variable asociativa
 (`colaboradores`) para almacenar los editores que cada fichero tiene,
-usando otra de las funciones del objeto. Usamos Logger, pero tambien
+usando otra de las funciones del objeto. Usamos Logger, pero también
 puede resultar útil otra función: Ver -> Transcripción de la
 ejecución, que nos explicita qué se ha hecho en cada momento y cuanto
 ha tardado cada ejecución, inclusive el objetivo final. Si tenemos
@@ -482,7 +482,7 @@ Google Drive permite tomar un primer contacto con el desarrollo de
 aplicaciones en la nube, al nivel *SaaS*, el superior (o inferior,
 según se mire). Los scripts pueden ir desde
 la simple utilidad aplicada a un documento, hasta lo muy complejo que se puede publicar en la tienda de
-*apps*, convirtiéndo a la plataforma SaaS  en un nuevo modo de distribución de
+*apps*, convirtiendo a la plataforma SaaS  en un nuevo modo de distribución de
 software. Y básicamente lo que hay que conocer es JavaScript y un poco
 del modelo de objetos.
 
